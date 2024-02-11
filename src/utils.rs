@@ -4,6 +4,7 @@ use bevy::{
     math::{vec2, vec3},
     prelude::*,
 };
+use bevy_egui::egui::Color32;
 use rand::Rng;
 
 use crate::*;
@@ -30,10 +31,8 @@ pub fn calc_rotation_angle(v1: Vec3, v2: Vec3) -> f32 {
     let dx = v1.x - v2.x;
     let dy = v1.y - v2.y;
 
-    // Calculate the angle using arctangent (atan2) function
     let mut angle_rad = dy.atan2(dx);
 
-    // Ensure the angle is within [0, 2*PI) range
     if angle_rad < 0.0 {
         angle_rad += 2.0 * PI;
     }
@@ -49,9 +48,40 @@ pub fn get_world_bounds() -> (f32, f32, f32, f32) {
     (min_x, min_y, max_x, max_y)
 }
 
+pub fn limit_to_world((x, y): (f32, f32)) -> (f32, f32) {
+    let (x, y) = (x.min(WORLD_W), y.min(WORLD_H));
+    let (x, y) = (x.max(-WORLD_W), y.max(-WORLD_H));
+    (x, y)
+}
+
 pub fn get_steering_force(target: Vec2, pos: Vec2, velocity: Vec2) -> Vec2 {
     let desired = target - pos;
     desired - velocity
+}
+
+pub fn get_color((r, g, b): (u8, u8, u8)) -> Color {
+    Color::rgb_u8(r, g, b)
+}
+
+pub fn get_color_hex(value: &str) -> Color {
+    Color::hex(value).unwrap()
+}
+
+pub fn get_color32((r, g, b): (u8, u8, u8)) -> Color32 {
+    Color32::from_rgb(r, g, b)
+}
+
+pub fn hex_to_rgba(hex: &str) -> Option<(u8, u8, u8, u8)> {
+    let alpha = match hex.len() {
+        6 => false,
+        8 => true,
+        _ => None?,
+    };
+    u32::from_str_radix(hex, 16)
+        .ok()
+        .map(|u| if alpha { u } else { u << 8 | 0xff })
+        .map(u32::to_be_bytes)
+        .map(|[r, g, b, a]| (r, g, b, a))
 }
 
 impl<T> LimitedVec<T> {

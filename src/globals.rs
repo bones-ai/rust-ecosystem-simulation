@@ -13,17 +13,47 @@ pub enum SimState {
 
 #[derive(Resource)]
 pub struct Settings {
-    pub enable_camera_follow: bool,
+    pub camera_follow_boid: bool,
+    pub camera_follow_predator: bool,
+    pub camera_clamp_center: bool,
     pub enable_gizmos: bool,
-    pub enable_plots: bool,
+    pub show_plots: bool,
+    pub show_plot_settings: bool,
+    pub plot_options: PlotOptions,
 }
 
-impl Settings {
-    pub fn new() -> Self {
+pub struct PlotOptions {
+    pub num_boids: bool,
+    pub lifespan: bool,
+    pub perception: bool,
+    pub affinity: bool,
+    pub steering: bool,
+    pub speed: bool,
+}
+
+impl Default for Settings {
+    fn default() -> Self {
         Self {
-            enable_camera_follow: false,
+            camera_follow_boid: false,
+            camera_follow_predator: false,
+            camera_clamp_center: true,
             enable_gizmos: false,
-            enable_plots: false,
+            show_plots: false,
+            show_plot_settings: false,
+            plot_options: PlotOptions::default(),
+        }
+    }
+}
+
+impl Default for PlotOptions {
+    fn default() -> Self {
+        Self {
+            num_boids: false,
+            lifespan: true,
+            perception: true,
+            affinity: true,
+            steering: false,
+            speed: false,
         }
     }
 }

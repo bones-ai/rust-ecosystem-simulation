@@ -7,7 +7,11 @@ Built in [Rust](https://www.rust-lang.org/) using the [Bevy](https://bevyengine.
 
 ## Timelapse video
 
+### Part 1
 [![youtube](https://img.youtube.com/vi/lCUovKa68jQ/0.jpg)](https://youtu.be/lCUovKa68jQ)
+
+### Part 2 with predators
+[![youtube](https://img.youtube.com/vi/sKYUIlDdC18/0.jpg)](https://youtu.be/sKYUIlDdC18)
 
 ## Usage
 - Clone the repo
@@ -19,6 +23,14 @@ cd rust-ecosystem-simulation
 ```bash
 cargo run
 ```
+
+## Controls
+- `Backspace` - Show graphs
+- `Tilde` - Show graph settings
+- `Tab` - Show debug gizmos
+- `1` - Camera follow boid
+- `2` - Camera follow predator boid
+- `3` - Camera snap to center
 
 ## Configurations
 - The project config file is located at `src/configs.rs`

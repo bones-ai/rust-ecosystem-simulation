@@ -1,5 +1,6 @@
 pub mod boid;
 pub mod configs;
+pub mod elements;
 pub mod globals;
 pub mod gui;
 pub mod stats;
